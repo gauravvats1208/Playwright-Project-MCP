@@ -1,0 +1,50 @@
+{
+  "usernameInput": "#user-name",
+  "passwordInput": "#password",
+  "loginButton": "#login-button",
+  "loginErrorMessage": "[data-test='error']",
+  
+  "productsContainer": ".inventory_container",
+  "productItem": ".inventory_item",
+  "productName": ".inventory_item_name",
+  "productPrice": ".inventory_item_price",
+  "productImage": ".inventory_item_img",
+  "addToCartButton": "[data-test*='add-to-cart']",
+  
+  "sortDropdown": ".product_sort_container",
+  "cartButton": ".shopping_cart_link",
+  "cartBadge": ".shopping_cart_badge",
+  
+  "cartContainer": ".cart_contents_container",
+  "cartItem": ".cart_item",
+  "removeFromCartButton": "[data-test*='remove']",
+  "checkoutButton": "#checkout",
+  "continueShoppingButton": "#continue-shopping",
+  
+  "checkoutContainer": ".checkout_info_container",
+  "firstNameInput": "#first-name",
+  "lastNameInput": "#last-name",
+  "postalCodeInput": "#postal-code",
+  "continueButton": "#continue",
+  "cancelButton": "#cancel",
+  
+  "checkoutOverview": ".checkout_summary_container",
+  "finishButton": "#finish",
+  "orderComplete": ".checkout_complete_container",
+  "orderCompleteText": ".complete-header",
+  "orderCompleteMessage": ".complete-text",
+  
+  "menuButton": "#react-burger-menu-btn",
+  "menuContainer": ".bm-menu",
+  "logoutLink": "#logout_sidebar_link",
+  "resetAppLink": "#reset_sidebar_link",
+  "allItemsLink": "#inventory_sidebar_link",
+  "aboutLink": "#about_sidebar_link",
+  
+  "footer": ".footer",
+  "footerText": ".footer_copy",
+  "socialLinks": ".social",
+  
+  "errorContainer": ".error-message-container",
+  "errorButton": ".error-button"
+}

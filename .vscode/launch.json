@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "name": "Cucumber Features",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/cucumber-js",
+      "args": [
+        "features",
+        "--require",
+        "features/step_definitions",
+        "--format",
+        "progress"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    }
+  ]
+}

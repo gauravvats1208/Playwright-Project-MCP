@@ -1,0 +1,43 @@
+{
+    "name": "MCPProject - AI Enhanced Testing",
+    "rootPath": ".",
+    "folders": [
+        {
+            "name": "Root",
+            "path": "."
+        },
+        {
+            "name": "Features",
+            "path": "./features"
+        },
+        {
+            "name": "Step Definitions",
+            "path": "./features/step_definitions"
+        },
+        {
+            "name": "Pages",
+            "path": "./pages"
+        },
+        {
+            "name": "Tests",
+            "path": "./tests"
+        }
+    ],
+    "settings": {
+        "cucumberautocomplete.steps": [
+            "features/step_definitions/*.js"
+        ],
+        "cucumberautocomplete.syncfeatures": "features/*.feature",
+        "cucumberautocomplete.strictGherkinCompletion": true,
+        "cucumberautocomplete.smartSnippets": true,
+        "cucumberautocomplete.stepsInvariants": true,
+        "files.associations": {
+            "*.feature": "feature"
+        },
+        "editor.semanticTokenColorCustomizations": {
+            "rules": {
+                "*.gherkin": "#4CAF50"
+            }
+        }
+    }
+}

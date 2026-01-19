@@ -37,6 +37,10 @@ Then('each product should have a price visible', async function () {
 });
 
 // Enhanced Cart Steps
+Then('the shopping cart badge should show {string}', async function (count) {
+    await expect(page.locator('.shopping_cart_badge')).toHaveText(count);
+});
+
 Then('the remove button for {string} should be visible', async function (productId) {
     await expect(page.locator(`[data-test="remove-${productId}"]`)).toBeVisible();
 });

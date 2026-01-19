@@ -78,6 +78,13 @@ Then('the shopping cart badge should be visible', async function () {
     await expect(page.locator('.shopping_cart_badge')).toBeVisible();
 });
 
+// Cart badge count step moved to extended_ecommerce_steps.js to avoid duplication
+
+When('I should add {string} to cart', async function (productId) {
+    await ecommercePage.addProductToCart(productId);
+    await page.waitForTimeout(1000);
+});
+
 When('I navigate to shopping cart', async function () {
     await ecommercePage.goToCart();
     await page.waitForTimeout(1000);
@@ -189,11 +196,7 @@ Then('I should analyze performance with AI if login time exceeds {int}ms', async
     }
 });
 
-// Sorting Steps
-When('I sort products by {string}', async function (sortOption) {
-    await ecommercePage.sortProducts(sortOption);
-    await page.waitForTimeout(1000);
-});
+// Sorting Steps (using implementation from saucedemo_steps.js to avoid duplicate)
 
 Then('products should be sorted in ascending price order', async function () {
     const prices = await ecommercePage.getProductPrices();

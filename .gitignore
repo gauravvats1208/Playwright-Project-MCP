@@ -1,0 +1,6 @@
+node_modules
+pop/dist
+output
+.tests-secrets.json
+test-results/
+.env.example

@@ -35,5 +35,8 @@
     },
     "files.associations": {
         "*.feature": "feature"
-    }
+    },
+    "editor.suggest.showSnippets": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.semanticHighlighting.enabled": true
 }

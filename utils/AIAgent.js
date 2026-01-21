@@ -11,7 +11,7 @@ const { TEST_USERS, getUserCredentials, getAllUsers } = require('../config/testU
 class AIAgent {
     constructor() {
         this.apiUrl = 'https://frwxt5uwb5da2wbtyx4p3wk4qm0sydut.lambda-url.us-east-1.on.aws/agent/a-gaurav-expy-agent/send_message';
-        this.apiKey = process.env.FAB_API_KEY || process.env.OPENAI_API_KEY || 'E47EA09B7DC5E36BDCDC5923:6d2fc1b57bbd620c3a1699b7e99dd282';
+        this.apiKey = process.env.FAB_API_KEY || process.env.OPENAI_API_KEY || '';
         this.userId = process.env.AI_USER_ID || 'test_user_001';
     }
 

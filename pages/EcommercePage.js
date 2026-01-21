@@ -97,47 +97,23 @@ class EcommercePage {
 
     // AI-Enhanced Methods
     async generateTestData(testType) {
-        const prompt = `Generate ${testType} test data for SauceDemo e-commerce testing. 
-        Available products: Sauce Labs Backpack, Sauce Labs Bike Light, Sauce Labs Bolt T-Shirt, 
-        Sauce Labs Fleece Jacket, Sauce Labs Onesie, Test.allTheThings() T-Shirt.
-        Include realistic user data and scenarios.`;
-        
-        return await this.aiAgent.generateTestData(prompt);
+        return await this.aiAgent.generateTestData(testType);
     }
 
     async generateTestScenarios(functionality) {
-        const prompt = `Generate comprehensive test scenarios for ${functionality} functionality 
-        on SauceDemo e-commerce website. Include positive, negative, and edge cases.
-        Available users: ${getUserTypes().join(', ')}.`;
-        
-        return await this.aiAgent.generateTestScenarios(prompt);
+        return await this.aiAgent.generateTestScenarios(functionality);
     }
 
     async findElementWithAI(description) {
-        const prompt = `Find the best CSS selector or locator for: "${description}" 
-        on SauceDemo website. The site has standard e-commerce elements like products, 
-        cart, checkout, login forms, etc.`;
-        
-        return await this.aiAgent.suggestLocator(prompt);
+        return await this.aiAgent.suggestLocator(description);
     }
 
     async analyzeTestFailure(errorDetails) {
-        const prompt = `Analyze this test failure on SauceDemo e-commerce site:
-        Error: ${errorDetails.error}
-        Test: ${errorDetails.testName}
-        Page: ${errorDetails.currentPage}
-        User: ${errorDetails.username}
-        Expected: ${errorDetails.expected}
-        Actual: ${errorDetails.actual}`;
-        
-        return await this.aiAgent.analyzeFailure(prompt);
+        return await this.aiAgent.analyzeTestFailure(errorDetails);
     }
 
     async executeAIGeneratedTest(scenario) {
-        const prompt = `Execute this test scenario on SauceDemo: "${scenario}". 
-        Provide step-by-step instructions using available methods in this class.`;
-        
-        const steps = await this.aiAgent.generateTestSteps(prompt);
+        const steps = await this.aiAgent.generateTestSteps(scenario);
         
         try {
             for (const step of steps) {
@@ -205,13 +181,7 @@ class EcommercePage {
     }
 
     async askAI(question) {
-        const { COMMON_PASSWORD } = require('../config/testUsers');
-        const prompt = `Question about SauceDemo e-commerce testing: ${question}
-        Context: SauceDemo is a demo shopping site with login, product browsing, cart, and checkout functionality.
-        Available test users: ${getUserTypes().join(', ')}.
-        All users have password: ${COMMON_PASSWORD}`;
-        
-        return await this.aiAgent.askQuestion(prompt);
+        return await this.aiAgent.askQuestion(question);
     }
 }
 

@@ -1,4 +1,4 @@
-const { Given, When, Then, setDefaultTimeout } = require('@cucumber/cucumber');
+const { When, Then, setDefaultTimeout } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
 const { EcommercePage } = require('../../pages/EcommercePage');
 
@@ -8,7 +8,6 @@ setDefaultTimeout(60000);
 // Global variables for extended testing
 let page;
 let ecommercePage;
-let loginStartTime;
 let loginDuration;
 
 // Enhanced Login Steps

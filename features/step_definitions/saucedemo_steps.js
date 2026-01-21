@@ -1,15 +1,28 @@
-const { Given, When, Then, Before, After, setDefaultTimeout } = require('@cucumber/cucumber');
+const { Given, When, Then, setDefaultTimeout } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
 const { EcommercePage } = require('../../pages/EcommercePage');
+const { TEST_USERS, getUserCredentials } = require('../../config/testUsers');
 
 // Set default timeout for step definitions
 setDefaultTimeout(60000);
 
 // Global variables
-let browser;
-let context;
 let page;
 let ecommercePage;
+
+// Helper function to resolve credentials
+function resolveCredentials(username, password) {
+    // If password is "secret_sauce" and username exists in TEST_USERS, use config
+    if (password === 'secret_sauce' && TEST_USERS[username]) {
+        const userConfig = getUserCredentials(username);
+        return { 
+            username: userConfig.username, 
+            password: userConfig.password 
+        };
+    }
+    // Otherwise use provided credentials (for custom test cases)
+    return { username, password };
+}
 
 // Background step
 Given('I am on the SauceDemo login page', async function () {
@@ -20,11 +33,28 @@ Given('I am on the SauceDemo login page', async function () {
     await page.waitForTimeout(1000); // Add 1 second delay for visibility
 });
 
-// Login step
+// Login step with dynamic credential resolution
 When('I login with username {string} and password {string}', async function (username, password) {
     page = this.page;
     ecommercePage = new EcommercePage(page);
-    await ecommercePage.login(username, password);
+    
+    // Resolve credentials from config
+    const credentials = resolveCredentials(username, password);
+    console.log(`Logging in with user: ${credentials.username} (resolved from config)`);
+    
+    await ecommercePage.login(credentials.username, credentials.password);
+    await page.waitForTimeout(1500); // Add 1.5 second delay after login
+});
+
+When('I login with username {string}', async function (username) {
+    page = this.page;
+    ecommercePage = new EcommercePage(page);
+    
+    // Auto-resolve credentials from testUsers config
+    const credentials = getUserCredentials(username);
+    console.log(`Logging in with user: ${credentials.username} (auto-resolved from config)`);
+    
+    await ecommercePage.login(credentials.username, credentials.password);
     await page.waitForTimeout(1500); // Add 1.5 second delay after login
 });
 

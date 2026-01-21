@@ -6,15 +6,17 @@ Feature: AI-Enhanced SauceDemo Testing
   Background:
     Given I am on the SauceDemo login page
 
+  @smoke @first-scenario
   Scenario: AI-generated login test scenarios
     When I generate AI test scenarios for "user login"
-    And I login with username "standard_user" and password "secret_sauce"
+    And I login with username "standard_user"
     Then I should see the product inventory page
     And I should see the inventory container
     And I should see "Swag Labs" logo
 
+  @second-scenario
   Scenario: AI-powered product testing with dynamic data
-    When I login with username "standard_user" and password "secret_sauce"
+    When I login with username "standard_user"
     And I generate AI test data for "product selection"
     Then I should see more than 0 products available
     When I add product "sauce-labs-backpack" to cart
@@ -23,7 +25,7 @@ Feature: AI-Enhanced SauceDemo Testing
 
   Scenario: Complete e-commerce workflow with AI assistance
     When I generate AI test data for "checkout information"
-    And I login with username "standard_user" and password "secret_sauce"
+    And I login with username "standard_user"
     And I add product "sauce-labs-backpack" to cart
     And I add product "sauce-labs-bike-light" to cart
     And I navigate to shopping cart
@@ -36,13 +38,13 @@ Feature: AI-Enhanced SauceDemo Testing
 
   Scenario: AI-driven error scenarios testing
     When I generate AI test scenarios for "login errors"
-    And I login with username "locked_out_user" and password "secret_sauce"
+    And I login with username "locked_out_user"
     Then I should see error message containing "locked out"
     When I ask AI about "locked out user testing strategies"
     Then I should receive AI guidance for error testing
 
   Scenario: AI-assisted element finding
-    When I login with username "standard_user" and password "secret_sauce"
+    When I login with username "standard_user"
     And I use AI to find element "shopping cart icon in the header"
     And I use AI to find element "hamburger menu button"
     Then the shopping cart link should be visible
@@ -50,12 +52,12 @@ Feature: AI-Enhanced SauceDemo Testing
 
   Scenario: AI-generated performance testing scenarios
     When I generate AI test scenarios for "performance testing"
-    And I measure login time for username "performance_glitch_user" and password "secret_sauce"
+    And I measure login time for username "performance_glitch_user"
     Then I should see the inventory container
     And I should analyze performance with AI if login time exceeds 5000ms
 
   Scenario: AI-powered sorting and filtering tests
-    When I login with username "standard_user" and password "secret_sauce"
+    When I login with username "standard_user"
     And I generate AI test scenarios for "product sorting"
     And I sort products by "lohi"
     Then products should be sorted in ascending price order
@@ -72,18 +74,18 @@ Feature: AI-Enhanced SauceDemo Testing
 
   Scenario: Problem user scenario with AI analysis
     When I generate AI test scenarios for "edge cases and problem scenarios"
-    And I login with username "problem_user" and password "secret_sauce"
+    And I login with username "problem_user"
     And I add product "sauce-labs-backpack" to cart
     Then I should analyze any issues with AI
     And I should log problem user image sources
 
   Scenario Outline: Multiple user types with AI-generated scenarios
     When I generate AI test scenarios for "<scenario_type>"
-    And I login with username "<username>" and password "secret_sauce"
+    And I login with username "<username>"
     Then I should handle "<expected_behavior>"
 
     Examples:
-      | username                | scenario_type        | expected_behavior     |
-      | standard_user          | normal shopping flow | successful login      |
-      | performance_glitch_user| performance testing  | slow but functional   |
-      | problem_user           | error handling       | UI issues detected    |
+      | username                | scenario_type        | expected_behavior   |
+      | standard_user           | normal shopping flow | successful login    |
+      | performance_glitch_user | performance testing  | slow but functional |
+      | problem_user            | error handling       | UI issues detected  |

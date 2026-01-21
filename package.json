@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cucumber-js features --require features/step_definitions",
+    "test:config": "node -e \"const config = require('./config/testUsers'); console.log('Available users:', config.getUserTypes()); console.log('Test user:', config.getUserCredentials('standard_user'));\"",
+    "test:single": "npx cucumber-js --require features/step_definitions --tags",
     "test:cucumber": "npx cucumber-js features --require features/step_definitions",
     "test:cucumber:ai": "npx cucumber-js features/ai_enhanced_testing.feature --require features/step_definitions",
     "test:cucumber:extended": "npx cucumber-js features/extended_ecommerce_testing.feature --require features/step_definitions",

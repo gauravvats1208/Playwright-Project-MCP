@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { AIAgent } = require('../utils/AIAgent');
+const { getUserTypes } = require('../config/testUsers');
 
 const locators = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'ecommerce-locators.json'), 'utf-8')
@@ -107,7 +108,7 @@ class EcommercePage {
     async generateTestScenarios(functionality) {
         const prompt = `Generate comprehensive test scenarios for ${functionality} functionality 
         on SauceDemo e-commerce website. Include positive, negative, and edge cases.
-        Available users: standard_user, locked_out_user, problem_user, performance_glitch_user.`;
+        Available users: ${getUserTypes().join(', ')}.`;
         
         return await this.aiAgent.generateTestScenarios(prompt);
     }
@@ -204,10 +205,11 @@ class EcommercePage {
     }
 
     async askAI(question) {
+        const { COMMON_PASSWORD } = require('../config/testUsers');
         const prompt = `Question about SauceDemo e-commerce testing: ${question}
         Context: SauceDemo is a demo shopping site with login, product browsing, cart, and checkout functionality.
-        Available test users: standard_user, locked_out_user, problem_user, performance_glitch_user.
-        All users have password: secret_sauce`;
+        Available test users: ${getUserTypes().join(', ')}.
+        All users have password: ${COMMON_PASSWORD}`;
         
         return await this.aiAgent.askQuestion(prompt);
     }

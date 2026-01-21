@@ -1,6 +1,7 @@
-const { Given, When, Then, setDefaultTimeout } = require('@cucumber/cucumber');
+const { When, Then, setDefaultTimeout } = require('@cucumber/cucumber');
 const { expect } = require('@playwright/test');
 const { EcommercePage } = require('../../pages/EcommercePage');
+const { getUserCredentials, TEST_USERS } = require('../../config/testUsers');
 
 // Set timeout for AI operations
 setDefaultTimeout(90000);
@@ -12,6 +13,20 @@ let aiTestScenarios = [];
 let aiTestData = {};
 let loginStartTime;
 let loginDuration;
+
+// Helper function to resolve credentials
+function resolveCredentials(username, password) {
+    // If password is "secret_sauce" and username exists in TEST_USERS, use config
+    if (password === 'secret_sauce' && TEST_USERS[username]) {
+        const userConfig = getUserCredentials(username);
+        return { 
+            username: userConfig.username, 
+            password: userConfig.password 
+        };
+    }
+    // Otherwise use provided credentials (for custom test cases)
+    return { username, password };
+}
 
 // AI Test Scenario Generation Steps
 When('I generate AI test scenarios for {string}', async function (scenarioType) {
@@ -45,7 +60,7 @@ When('I generate AI test data for {string}', async function (dataType) {
     } catch (error) {
         console.log(`AI data generation failed, using defaults for ${dataType}`);
         aiTestData = {
-            users: [{ username: 'standard_user', password: 'secret_sauce' }],
+            users: [getUserCredentials('standard_user')],
             products: [{ name: 'Sauce Labs Backpack', id: 'sauce-labs-backpack' }],
             checkoutInfo: { firstName: 'John', lastName: 'Doe', postalCode: '12345' }
         };
@@ -81,6 +96,9 @@ Then('the shopping cart badge should be visible', async function () {
 // Cart badge count step moved to extended_ecommerce_steps.js to avoid duplication
 
 When('I should add {string} to cart', async function (productId) {
+    page = this.page;
+    ecommercePage = new EcommercePage(page);
+    
     await ecommercePage.addProductToCart(productId);
     await page.waitForTimeout(1000);
 });
@@ -170,14 +188,34 @@ Then('the burger menu button should be visible', async function () {
 
 // Performance Testing Steps
 When('I measure login time for username {string} and password {string}', async function (username, password) {
+    // Resolve credentials dynamically
+    const credentials = resolveCredentials(username, password);
+    
     page = this.page;
     ecommercePage = new EcommercePage(page);
     
     loginStartTime = Date.now();
-    await ecommercePage.login(username, password);
+    await ecommercePage.login(credentials.username, credentials.password);
     loginDuration = Date.now() - loginStartTime;
     
-    console.log(`Login time for ${username}: ${loginDuration}ms`);
+    console.log(`Login time for ${credentials.username}: ${loginDuration}ms`);
+    this.loginDuration = loginDuration;
+    
+    await page.waitForTimeout(1500);
+});
+
+When('I measure login time for username {string}', async function (username) {
+    // Auto-resolve credentials from testUsers config
+    const credentials = getUserCredentials(username);
+    
+    page = this.page;
+    ecommercePage = new EcommercePage(page);
+    
+    loginStartTime = Date.now();
+    await ecommercePage.login(credentials.username, credentials.password);
+    loginDuration = Date.now() - loginStartTime;
+    
+    console.log(`Login time for ${credentials.username}: ${loginDuration}ms`);
     this.loginDuration = loginDuration;
     
     await page.waitForTimeout(1500);
@@ -246,8 +284,16 @@ Then('AI should provide execution results', async function () {
 });
 
 Then('I should verify the scenario manually by logging in', async function () {
-    // Manual verification step
+    // Manual verification step - actually log in the user
     console.log('Performing manual verification of AI-generated scenario');
+    
+    page = this.page;
+    ecommercePage = new EcommercePage(page);
+    
+    // Log in with standard user for manual verification
+    const credentials = getUserCredentials('standard_user');
+    await ecommercePage.login(credentials.username, credentials.password);
+    await page.waitForTimeout(1500); // Wait for login to complete
 });
 
 // Problem User Analysis Steps
